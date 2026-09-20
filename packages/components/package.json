@@ -1,6 +1,6 @@
 {
-  "name": "@formily/antd-v5",
-  "version": "1.2.4",
+  "name": "@luminaryworks/formily-antd-v6",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "lib",
   "types": "lib/index.d.ts",
@@ -22,40 +22,45 @@
     "**/*/style.js"
   ],
   "scripts": {
-    "build": "formily-tpl build"
+    "build": "node ../../scripts/build-package.cjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/formilyjs/antd.git"
+    "url": "git+https://github.com/LuminaryWorks/formily-antd-v6.git"
   },
   "bugs": {
-    "url": "https://github.com/formilyjs/antd/issues"
+    "url": "https://github.com/LuminaryWorks/formily-antd-v6/issues"
   },
-  "homepage": "https://github.com/formilyjs/antd#readme",
+  "homepage": "https://github.com/LuminaryWorks/formily-antd-v6#readme",
   "publishConfig": {
     "access": "public"
   },
   "peerDependencies": {
-    "@types/react": ">=16.8.0 || >=17.0.0",
-    "@types/react-dom": ">=16.8.0 || >=17.0.0",
-    "antd": "^5.13.0",
-    "react": ">=16.8.0 || >=17.0.0",
-    "react-dom": ">=16.8.0",
-    "react-is": ">=16.8.0 || >=17.0.0"
+    "@types/react": ">=18.0.0",
+    "@types/react-dom": ">=18.0.0",
+    "antd": "^6.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "react-is": ">=18.0.0"
   },
   "dependencies": {
-    "@ant-design/cssinjs": "^1.3.1",
-    "@ant-design/icons": "^5.0.0",
+    "@ant-design/cssinjs": "^2.1.0",
+    "@ant-design/icons": "^6.1.0",
     "@dnd-kit/core": "^6.0.0",
     "@dnd-kit/sortable": "^7.0.0",
-    "@formily/core": "^2.2.0",
-    "@formily/grid": "^2.2.0",
-    "@formily/json-schema": "^2.2.0",
-    "@formily/react": "^2.2.0",
-    "@formily/reactive": "^2.2.0",
-    "@formily/reactive-react": "^2.2.0",
-    "@formily/shared": "^2.2.0",
+    "@formily/core": "^2.3.7",
+    "@formily/grid": "^2.3.7",
+    "@formily/json-schema": "^2.3.7",
+    "@formily/react": "^2.3.7",
+    "@formily/reactive": "^2.3.7",
+    "@formily/reactive-react": "^2.3.7",
+    "@formily/shared": "^2.3.7",
     "classnames": "^2.2.6",
-    "react-sticky-box": "^1.0.2"
-  }
+    "react-sticky-box": "^2.0.5"
+  },
+  "description": "Formily Ant Design 6.x adaptor maintained by LuminaryWorks (fork of @formily/antd-v5)",
+  "files": [
+    "lib",
+    "esm"
+  ]
 }

@@ -49,9 +49,12 @@ export interface IFormDialog {
   close(): void
 }
 
-export interface IModalProps extends ModalProps {
-  onOk?: (event: React.MouseEvent<HTMLElement>) => void | boolean
-  onCancel?: (event: React.MouseEvent<HTMLElement>) => void | boolean
+type ModalOkEvent = Parameters<NonNullable<ModalProps['onOk']>>[0]
+type ModalCancelEvent = Parameters<NonNullable<ModalProps['onCancel']>>[0]
+
+export interface IModalProps extends Omit<ModalProps, 'onOk' | 'onCancel'> {
+  onOk?: (event: ModalOkEvent) => void | boolean
+  onCancel?: (event: ModalCancelEvent) => void | boolean
   loadingText?: React.ReactNode
 }
 
@@ -102,7 +105,7 @@ export function FormDialog(title: any, id: any, renderer?: any): IFormDialog {
     ...props,
     afterClose: () => {
       props?.afterClose?.()
-      root.unmount()
+      void root.unmount()
     },
   }
   const DialogContent = observer(() => {
@@ -206,8 +209,8 @@ export function FormDialog(title: any, id: any, renderer?: any): IFormDialog {
 
 const DialogFooter: ReactFC = (props) => {
   const ref = useRef<HTMLDivElement>(null)
-  const [footer, setFooter] = useState<HTMLDivElement>()
-  const footerRef = useRef<HTMLDivElement>()
+  const [footer, setFooter] = useState<HTMLDivElement | null>(null)
+  const footerRef = useRef<HTMLDivElement | null>(null)
   const prefixCls = usePrefixCls('modal')
   useLayoutEffect(() => {
     const content = ref.current?.closest(`.${prefixCls}-content`)

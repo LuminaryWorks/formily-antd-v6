@@ -14,6 +14,28 @@ import { ArrayBase } from '../array-base'
 import { usePrefixCls } from '../__builtins__'
 import useStyle from './style'
 
+let borderedWarned = false
+
+function mapCardProps(props: CardProps): CardProps {
+  const { bordered, variant, ...rest } = props as CardProps & {
+    bordered?: boolean
+  }
+
+  if (variant !== undefined) return { ...rest, variant }
+
+  if (bordered !== undefined) {
+    if (!borderedWarned && process.env.NODE_ENV !== 'production') {
+      borderedWarned = true
+      console.warn(
+        '[@luminaryworks/formily-antd-v6 ArrayCards] `bordered` is deprecated. Please use `variant` instead.'
+      )
+    }
+    return { ...rest, variant: bordered ? 'outlined' : 'borderless' }
+  }
+
+  return rest as CardProps
+}
+
 const isAdditionComponent = (schema: ISchema) => {
   return schema['x-component']?.indexOf('Addition') > -1
 }
@@ -54,6 +76,7 @@ export const InternalArrayCards: ReactFC<CardProps> = observer((props) => {
   const dataSource = Array.isArray(field.value) ? field.value : []
   const prefixCls = usePrefixCls('formily-array-cards', props)
   const [wrapSSR, hashId] = useStyle(prefixCls)
+  const cardProps = mapCardProps(props)
 
   if (!schema) throw new Error('can not found schema object')
 
@@ -69,8 +92,7 @@ export const InternalArrayCards: ReactFC<CardProps> = observer((props) => {
               schema={items}
               name={index}
               filterProperties={(schema) => {
-                if (!isIndexComponent(schema)) return false
-                return true
+                return isIndexComponent(schema)
               }}
               onlyRenderProperties
             />
@@ -85,8 +107,7 @@ export const InternalArrayCards: ReactFC<CardProps> = observer((props) => {
               schema={items}
               name={index}
               filterProperties={(schema) => {
-                if (!isOperationComponent(schema)) return false
-                return true
+                return isOperationComponent(schema)
               }}
               onlyRenderProperties
             />
@@ -100,8 +121,7 @@ export const InternalArrayCards: ReactFC<CardProps> = observer((props) => {
           name={index}
           filterProperties={(schema) => {
             if (isIndexComponent(schema)) return false
-            if (isOperationComponent(schema)) return false
-            return true
+            return !isOperationComponent(schema)
           }}
         />
       ) : null
@@ -112,7 +132,7 @@ export const InternalArrayCards: ReactFC<CardProps> = observer((props) => {
           record={() => field.value?.[index]}
         >
           <Card
-            {...props}
+            {...cardProps}
             onChange={() => {}}
             className={cls(`${prefixCls}-item`, hashId, props.className)}
             title={title}
@@ -138,7 +158,7 @@ export const InternalArrayCards: ReactFC<CardProps> = observer((props) => {
     if (dataSource?.length) return
     return (
       <Card
-        {...props}
+        {...cardProps}
         onChange={() => {}}
         className={cls(`${prefixCls}-item`, hashId, props.className)}
         title={props.title || field.title}

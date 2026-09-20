@@ -1,58 +1,22 @@
-[English](./README.md) | 简体中文
+# @luminaryworks/formily-antd-v6
 
-<p align="center">
-<img src="https://img.alicdn.com/tfs/TB1fHhZu4D1gK0jSZFyXXciOVXa-2500-1200.png">
-<img src="https://img.shields.io/npm/dt/@formily/antd-v5"/>
-<img src="https://img.shields.io/npm/dm/@formily/antd-v5"/>
-<a href="https://www.npmjs.com/package/@formily/antd-v5"><img src="https://img.shields.io/npm/v/@formily/antd-v5.svg"></a>
-<a href="https://codecov.io/gh/formilyjs/antd">
-  <img src="https://codecov.io/gh/formilyjs/antd/branch/master/graph/badge.svg?token=3V9RU8Wh9d"/>
-</a>
-<img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/>
-<a href="https://github.com/actions-cool/issues-helper">
-  <img src="https://img.shields.io/badge/using-issues--helper-blueviolet"/>
-</a>
-</p>
+面向 LuminaryWorks 生态（含 DataLuminary DataView）的 Formily + Ant Design **6.x** 适配包。
 
----
+基于 [`formilyjs/antd`](https://github.com/formilyjs/antd)（`@formily/antd-v5`）fork。官方 Ant Design 6 支持仍在推进中（[PR #59](https://github.com/formilyjs/antd/pull/59)）；本仓库合并社区改动，并以 `@luminaryworks` 作用域持续发布。
 
-## 概要
+## 致谢
 
-这是一个结合了 Formily & Ant Design 的超酷组件库.
+- [formilyjs/antd#59](https://github.com/formilyjs/antd/pull/59)
+- [potop/formily-antd-v6](https://github.com/potop/formily-antd-v6)
+- [bobfw/antd-sync](https://github.com/bobfw/antd-sync)
+- [thienvu18/antd](https://github.com/thienvu18/antd)
 
-## 特性
+## 安装
 
-- 🖼 可设计，借助 Form Builder 可以快速搭建表单
-- 🚀 高性能，字段分布式渲染，大大减轻 React 渲染压力
-- 💡 支持 Ant Design/Fusion Next 组件体系
-- 🎨 JSX 标签化写法/JSON Schema 数据驱动方案无缝迁移过渡
-- 🏅 副作用逻辑独立管理，涵盖各种复杂联动校验逻辑
-- 🌯 支持各种表单复杂布局方案
-
-## 表单设计器
-
-![https://designable-antd.formilyjs.org/](https://img.alicdn.com/imgextra/i3/O1CN01xAJj1y1wcGzXYc1Uq_!!6000000006328-2-tps-2980-1740.png)
-
-## 官网
-
-https://antd5.formilyjs.org
-
-## 生态产品
-
-- [formily](https://github.com/alibaba/formily)
-- [formilyjs](https://github.com/formilyjs)
-- [designable](https://github.com/alibaba/designable)
-
-## 如何贡献?
-
-- [Contribute document](https://formilyjs.org/zh-CN/guide/contribution)
-
-## 贡献者
-
-This project exists thanks to all the people who contribute.
-<a href="https://github.com/formilyjs/antd/graphs/contributors"><img src="https://contrib.rocks/image?repo=formilyjs/antd" /></a>
+```bash
+npm install @luminaryworks/formily-antd-v6 antd@^6 @formily/core @formily/react
+```
 
 ## LICENSE
 
-Formily is open source software licensed as
-[MIT](./LICENSE.md).
+MIT

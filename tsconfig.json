@@ -2,7 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "module": "commonjs",
     "target": "es5",
     "allowJs": false,
@@ -17,7 +17,7 @@
     "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@formily/antd-v5": ["packages/components/src"]
+      "@luminaryworks/formily-antd-v6": ["packages/components/src"]
     },
     "lib": ["ESNext", "DOM"]
   }

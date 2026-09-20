@@ -30,10 +30,6 @@ type FormDrawerRenderer =
 
 type DrawerTitle = string | number | React.ReactElement
 
-type EventType =
-  | React.KeyboardEvent<HTMLDivElement>
-  | React.MouseEvent<HTMLDivElement | HTMLButtonElement>
-
 const isDrawerTitle = (props: any): props is DrawerTitle => {
   return (
     isNum(props) || isStr(props) || isBool(props) || React.isValidElement(props)
@@ -57,7 +53,9 @@ export interface IFormDrawer {
 }
 
 export interface IDrawerProps extends DrawerProps {
-  onClose?: (e: EventType) => void | boolean
+  onClose?: (
+    e: Parameters<NonNullable<DrawerProps['onClose']>>[0]
+  ) => void | boolean
   loadingText?: React.ReactNode
 }
 interface IEnv {
@@ -174,12 +172,12 @@ export function FormDrawer(title: any, id: any, renderer?: any): IFormDrawer {
 
 const DrawerExtra: ReactFC = (props) => {
   const ref = useRef<HTMLDivElement>(null)
-  const [extra, setExtra] = useState<HTMLDivElement>()
-  const extraRef = useRef<HTMLDivElement>()
+  const [extra, setExtra] = useState<HTMLDivElement | undefined>()
+  const extraRef = useRef<HTMLDivElement | undefined>(undefined)
   const prefixCls = usePrefixCls('drawer')
   useLayoutEffect(() => {
     const content = ref.current
-      ?.closest(`.${prefixCls}-content`)
+      ?.closest(`.${prefixCls}-section`)
       ?.querySelector(`.${prefixCls}-header`)
     if (content) {
       if (!extraRef.current) {
@@ -207,11 +205,11 @@ const DrawerExtra: ReactFC = (props) => {
 
 const DrawerFooter: ReactFC = (props) => {
   const ref = useRef<HTMLDivElement>(null)
-  const [footer, setFooter] = useState<HTMLDivElement>()
-  const footerRef = useRef<HTMLDivElement>()
+  const [footer, setFooter] = useState<HTMLDivElement | undefined>()
+  const footerRef = useRef<HTMLDivElement | undefined>(undefined)
   const prefixCls = usePrefixCls('drawer')
   useLayoutEffect(() => {
-    const content = ref.current?.closest(`.${prefixCls}-content`)
+    const content = ref.current?.closest(`.${prefixCls}-section`)
     if (content) {
       if (!footerRef.current) {
         footerRef.current = content.querySelector(

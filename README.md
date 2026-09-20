@@ -1,60 +1,35 @@
-# formily antd repository
+# @luminaryworks/formily-antd-v6
 
-English | [简体中文](./README.zh-CN.md)
+Formily Ant Design **6.x** adaptor for the LuminaryWorks ecosystem (DataLuminary DataView and sibling products).
 
-<p align="center">
-<img src="https://img.alicdn.com/tfs/TB1fHhZu4D1gK0jSZFyXXciOVXa-2500-1200.png">
-<img src="https://img.shields.io/npm/dt/@formily/antd-v5"/>
-<img src="https://img.shields.io/npm/dm/@formily/antd-v5"/>
-<a href="https://www.npmjs.com/package/@formily/antd-v5"><img src="https://img.shields.io/npm/v/@formily/antd-v5.svg"></a>
-<a href="https://codecov.io/gh/formilyjs/antd">
-  <img src="https://codecov.io/gh/formilyjs/antd/branch/master/graph/badge.svg?token=3V9RU8Wh9d"/>
-</a>
-<img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"/>
-<a href="https://github.com/actions-cool/issues-helper">
-  <img src="https://img.shields.io/badge/using-issues--helper-blueviolet"/>
-</a>
-</p>
+Forked from [`formilyjs/antd`](https://github.com/formilyjs/antd) (`@formily/antd-v5`). Official Ant Design 6 support is still open ([PR #59](https://github.com/formilyjs/antd/pull/59)); this package merges community work and keeps a maintained publish path under `@luminaryworks`.
 
----
+## Credits
 
-## Overview
+Adaptation draws from:
 
-The Awesome Components Library with Formily & Ant Design.
+- [formilyjs/antd#59](https://github.com/formilyjs/antd/pull/59) (xiaochong444)
+- [potop/formily-antd-v6](https://github.com/potop/formily-antd-v6) (`@potop/formily-antd-v6`)
+- [bobfw/antd-sync](https://github.com/bobfw/antd-sync) (`formily-antd-sync`)
+- [thienvu18/antd](https://github.com/thienvu18/antd) (`@thienvu18/formily-antd-v6`)
 
-## Features
+## Install
 
-- 🖼 Designable, You can quickly develop forms at low cost through [Form Builder](https://designable-antd.formilyjs.org/).
-- 🚀 High performance, fields managed independently, rather rerender the whole tree.
-- 💡 Integrated Alibaba Fusion and Ant Design components are guaranteed to work out of the box.
-- 🎨 JSON Schema applied for BackEnd. JSchema applied for FrontEnd. Two paradigms can be converted to each other.
-- 🏅 Side effects are managed independently, making form data linkages easier than ever before.
-- 🌯 Override most complicated form layout use cases.
+```bash
+npm install @luminaryworks/formily-antd-v6 antd@^6 @formily/core @formily/react
+```
 
-## Form Builder
+Peer: `antd ^6`, `react >=18` (React 19 OK).
 
-![https://designable-antd.formilyjs.org/](https://img.alicdn.com/imgextra/i3/O1CN01xAJj1y1wcGzXYc1Uq_!!6000000006328-2-tps-2980-1740.png)
+## Local development / link into DataView
 
-## WebSite
-
-<https://antd5.formilyjs.org>
-
-## Community
-
-- [formily](https://github.com/alibaba/formily)
-- [formilyjs](https://github.com/formilyjs)
-- [designable](https://github.com/alibaba/designable)
-
-## How to contribute?
-
-- [Contribute document](https://formilyjs.org/zh-CN/guide/contribution)
-
-## Contributors
-
-This project exists thanks to all the people who contribute.
-<a href="https://github.com/formilyjs/antd/graphs/contributors"><img src="https://contrib.rocks/image?repo=formilyjs/antd" /></a>
+```bash
+yarn install --ignore-engines
+yarn build
+# then in DataView:
+#   "@luminaryworks/formily-antd-v6": "link:../../../work/formily-antd-v6/packages/components"
+```
 
 ## LICENSE
 
-Formily is open source software licensed as
-[MIT](./LICENSE.md).
+MIT (same as upstream Formily antd adaptor).

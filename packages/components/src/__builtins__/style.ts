@@ -2,6 +2,13 @@ import type { CSSInterpolation, CSSObject } from '@ant-design/cssinjs'
 import { useStyleRegister } from '@ant-design/cssinjs'
 import { merge } from '@formily/shared'
 import type { ComponentTokenMap, GlobalToken } from 'antd/es/theme/interface'
+import {
+  Fragment,
+  createElement,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from 'react'
 import { useConfig, useToken } from './hooks'
 
 export type OverrideComponent = keyof ComponentTokenMap | (string & {})
@@ -58,7 +65,7 @@ export const genCommonStyle = (
   }
 }
 export type UseComponentStyleResult = [
-  (node: React.ReactNode) => React.ReactElement,
+  (node: ReactNode) => ReactElement,
   string
 ]
 
@@ -73,35 +80,37 @@ export const genStyleHook = <ComponentName extends OverrideComponent>(
     const { theme, token, hashId } = useToken()
     const { getPrefixCls, iconPrefixCls, csp } = useConfig()
     const rootPrefixCls = getPrefixCls()
-    return [
-      useStyleRegister(
-        {
-          nonce: csp?.nonce,
-          theme,
-          token,
-          hashId,
-          path: ['formily-antd', component, prefixCls, iconPrefixCls],
-        },
-        () => {
-          const componentCls = `.${prefixCls}`
-          const mergedToken: TokenWithCommonCls<GlobalToken> = merge(token, {
-            ...token['Form'], // Merge the antd form token
-            componentCls,
-            prefixCls,
-            iconCls: `.${iconPrefixCls}`,
-            antCls: `.${rootPrefixCls}`,
-          })
+    useStyleRegister(
+      {
+        nonce: csp?.nonce,
+        theme,
+        token,
+        hashId,
+        path: ['formily-antd', component, prefixCls, iconPrefixCls],
+      },
+      () => {
+        const componentCls = `.${prefixCls}`
+        const mergedToken: TokenWithCommonCls<GlobalToken> = merge(token, {
+          ...token['Form'],
+          componentCls,
+          prefixCls,
+          iconCls: `.${iconPrefixCls}`,
+          antCls: `.${rootPrefixCls}`,
+        })
 
-          const styleInterpolation = styleFn(mergedToken, {
-            hashId,
-            prefixCls,
-            rootPrefixCls,
-            iconPrefixCls,
-          })
-          return [genCommonStyle(token, prefixCls), styleInterpolation]
-        }
-      ),
-      hashId,
-    ]
+        const styleInterpolation = styleFn(mergedToken, {
+          hashId,
+          prefixCls,
+          rootPrefixCls,
+          iconPrefixCls,
+        })
+        return [genCommonStyle(token, prefixCls), styleInterpolation]
+      }
+    )
+
+    const wrapSSR = (node: ReactNode): ReactElement =>
+      isValidElement(node) ? node : createElement(Fragment, null, node)
+
+    return [wrapSSR, hashId]
   }
 }
