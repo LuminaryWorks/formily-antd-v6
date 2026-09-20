@@ -1,0 +1,78 @@
+name: Publish @luminaryworks/formily-antd-v6
+
+# Trusted Publishing (OIDC). No NPM_TOKEN.
+# npmjs Trusted Publisher must match:
+#   Organization or user: LuminaryWorks
+#   Repository: formily-antd-v6
+#   Workflow filename: publish-packages.yml
+#   Environment: (leave empty)
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Semver bump when unpublished source changes exist
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+      force:
+        description: Bump and publish even if no source change since last version commit
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: publish-packages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          # Do not set registry-url / NODE_AUTH_TOKEN — that blocks OIDC.
+
+      - name: Enable Yarn Classic
+        run: corepack enable && corepack prepare yarn@1.22.22 --activate
+
+      - name: Ensure npm CLI supports trusted publishing
+        run: |
+          npm install -g npm@latest
+          echo "NPM_BIN=$(command -v npm)" >> "$GITHUB_ENV"
+          npm --version
+
+      - name: Install and build components
+        run: |
+          yarn install --ignore-engines --frozen-lockfile
+          yarn build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+
+      - name: Publish to npmjs (OIDC)
+        env:
+          PUBLISH_BUMP: ${{ github.event.inputs.bump || 'patch' }}
+          PUBLISH_FORCE_ALL: ${{ github.event.inputs.force == true && '1' || '0' }}
+        run: node scripts/publish-if-new.mjs
+
+      - name: Commit version bumps
+        run: |
+          git add packages/components/package.json
+          if git diff --cached --quiet; then
+            echo "no version bumps to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: bump @luminaryworks/formily-antd-v6 version [skip ci]"
+          git push

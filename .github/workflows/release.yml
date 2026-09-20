@@ -1,36 +1,26 @@
-name: Release
+# Deprecated — do not use
+#
+# This Formily upstream release workflow expects NPM_AUTH_TOKEN + lerna and is
+# incompatible with LuminaryWorks OIDC Trusted Publishing.
+# Use publish-packages.yml instead (see PUBLISH.md).
+#
+# Kept disabled so accidental "chore(release)" commits cannot publish with a
+# missing/legacy secret.
+
+name: Release (deprecated)
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      acknowledge:
+        description: Type "deprecated" to acknowledge this workflow must not publish
+        required: true
+
 jobs:
-  release:
+  noop:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, 'chore(release)')
     steps:
-      - uses: actions/checkout@v1
-        with:
-          ref: master
-          fetch-depth: 0
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
-          registry-url: https://registry.npmjs.org/
       - run: |
-          yarn -v
-          yarn --ignore-engines
-          yarn build
-          yarn test:prod
-        env:
-          NODE_OPTIONS: --max_old_space_size=4096
-          REGISTRY: https://registry.npmjs.org
-      - uses: janrywang/github-tag-release@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      - run: yarn run release
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-          ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
+          echo "Use .github/workflows/publish-packages.yml (OIDC)."
+          echo "See PUBLISH.md"
+          exit 1

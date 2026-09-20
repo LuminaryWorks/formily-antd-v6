@@ -21,6 +21,12 @@ npm install @luminaryworks/formily-antd-v6 antd@^6 @formily/core @formily/react
 
 Peer: `antd ^6`, `react >=18` (React 19 OK).
 
+## Publish
+
+Automatic npm publish uses the same **OIDC Trusted Publishing** pattern as `LuminaryWorks/shared`.
+
+See [PUBLISH.md](./PUBLISH.md).
+
 ## Local development / link into DataView
 
 ```bash
