@@ -90,7 +90,7 @@ function publishDir(pkgDir) {
   delete env.NODE_AUTH_TOKEN
   delete env.NPM_TOKEN
   delete env.npm_config__authToken
-  const r = run(npmBin(), ['publish', '--access', 'public'], {
+  const r = run(npmBin(), ['publish', '--access', 'public', '--registry', 'https://registry.npmjs.org'], {
     cwd: pkgDir,
     stdio: 'inherit',
     env,
