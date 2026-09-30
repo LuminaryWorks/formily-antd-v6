@@ -60,7 +60,7 @@
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
-    "antd": "^6.6.2",
+    "antd": "^6.6.5",
     "cross-env": "^7.0.3",
     "dumi": "^1.1.0",
     "eslint": "^8.28.0",

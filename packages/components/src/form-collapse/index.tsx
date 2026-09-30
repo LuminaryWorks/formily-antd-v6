@@ -107,11 +107,13 @@ const InternalFormCollapse: ReactFC<IFormCollapseProps> = observer(
     const takeActiveKeys = () => {
       if (props.activeKey) return props.activeKey
       if (_formCollapse?.activeKeys) return _formCollapse?.activeKeys
-      if (props.accordion) return panels[0]?.name
-      return panels.map((item) => item.name)
+      if (props.accordion) {
+        return panels[0]?.props?.key ?? panels[0]?.name
+      }
+      return panels.map((item) => item.props?.key ?? item.name)
     }
 
-    const badgedHeader = (key: SchemaKey, props: any) => {
+    const badgedHeader = (key: SchemaKey, panelProps: CollapsePanelProps) => {
       const errors = field.form.queryFeedbacks({
         type: 'error',
         address: `${field.address.concat(key)}.*`,
@@ -119,11 +121,11 @@ const InternalFormCollapse: ReactFC<IFormCollapseProps> = observer(
       if (errors.length) {
         return (
           <Badge size="small" className="errors-badge" count={errors.length}>
-            {props.header}
+            {panelProps.header}
           </Badge>
         )
       }
-      return props.header
+      return panelProps.header
     }
     return (
       <Collapse
@@ -134,18 +136,17 @@ const InternalFormCollapse: ReactFC<IFormCollapseProps> = observer(
           props?.onChange?.(key)
           _formCollapse?.setActiveKeys?.(key)
         }}
-      >
-        {panels.map(({ props, schema, name }, index) => (
-          <Collapse.Panel
-            key={index}
-            {...props}
-            header={badgedHeader(name, props)}
-            forceRender
-          >
-            <RecursionField schema={schema} name={name} />
-          </Collapse.Panel>
-        ))}
-      </Collapse>
+        items={panels.map(({ props: panelProps, schema, name }) => {
+          const { key: panelKey, header: _header, ...restProps } = panelProps
+          return {
+            ...restProps,
+            key: String(panelKey ?? name),
+            label: badgedHeader(name, panelProps),
+            forceRender: true,
+            children: <RecursionField schema={schema} name={name} />,
+          }
+        })}
+      />
     )
   }
 )
